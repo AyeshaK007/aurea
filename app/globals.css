@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg-ivory: #F8F5F1;
+  --color-text-main: #171615;
+  --color-accent-rose: #C98F78;
+  --color-bg-blush: #E9D8D0;
+  --color-champagne: #B88968;
+
+  --font-serif: var(--font-cormorant), Georgia, serif;
+  --font-sans: var(--font-manrope), sans-serif;
+}
+
+body {
+  background-color: #F8F5F1;
+  color: #171615;
+}
