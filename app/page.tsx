@@ -5,6 +5,8 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Navbar from "@/components/Navbar";
 import PhilosophySection from "@/components/PhilosophySection";
+import CollectionSection from "@/components/CollectionSection";
+import IngredientLab from "@/components/IngredientLab";
 import { ArrowRight } from "lucide-react";
 
 export default function Home() {
@@ -17,55 +19,47 @@ export default function Home() {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-      // 0ms: Navbar slide down
       tl.fromTo(
         ".nav-container",
         { y: -30, opacity: 0 },
         { y: 0, opacity: 1, duration: 1 }
       )
-      // Eyebrow
       .fromTo(
         ".hero-eyebrow",
         { y: 20, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.8 },
         "-=0.8"
       )
-      // Heading lines staggered
       .fromTo(
         ".heading-line",
         { y: "100%", opacity: 0 },
         { y: "0%", opacity: 1, duration: 1.1, stagger: 0.12 },
         "-=0.65"
       )
-      // Description
       .fromTo(
         ".hero-desc",
         { y: 20, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.8 },
         "-=0.5"
       )
-      // CTA Button
       .fromTo(
         ".hero-cta",
         { y: 20, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.8 },
         "-=0.6"
       )
-      // Bottle entrance
       .fromTo(
         ".hero-bottle",
         { scale: 0.88, opacity: 0, y: 60, rotation: -6 },
         { scale: 1, opacity: 1, y: 0, rotation: 0, duration: 1.8, ease: "power2.out" },
         1.0
       )
-      // Rings expand
       .fromTo(
         ".hero-circle",
         { scale: 0.6, opacity: 0 },
         { scale: 1, opacity: 1, duration: 1.8, ease: "power2.out" },
         "<"
       )
-      // Badge
       .fromTo(
         ".hero-badge",
         { y: 15, opacity: 0 },
@@ -73,7 +67,6 @@ export default function Home() {
         "-=0.6"
       );
 
-      // Continuous subtle idle floating
       gsap.to(".hero-bottle-float", {
         y: -14,
         rotation: 1.5,
@@ -83,7 +76,6 @@ export default function Home() {
         ease: "sine.easeInOut",
       });
 
-      // ScrollTrigger bottle parallax on scroll
       gsap.to(".hero-bottle-container", {
         scrollTrigger: {
           trigger: ".hero-section",
@@ -95,9 +87,8 @@ export default function Home() {
         rotation: 4,
         ease: "none",
       });
-    }, containerRef); // Scoped to containerRef on <main>
+    }, containerRef);
 
-    // Subtle Mouse Parallax Effect on Bottle
     const handleMouseMove = (e: MouseEvent) => {
       if (!bottleRef.current) return;
       const { clientX, clientY } = e;
@@ -128,9 +119,7 @@ export default function Home() {
       <section className="hero-section relative min-h-screen overflow-hidden pt-32 lg:pt-36 pb-20">
         <div className="max-w-7xl mx-auto px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center min-h-[calc(100vh-10rem)]">
           
-          {/* Left Column: Typography */}
           <div className="lg:col-span-7 flex flex-col justify-center space-y-6 z-10 pt-12 lg:pt-0">
-            
             <div className="hero-eyebrow font-sans uppercase tracking-[0.3em] text-[11px] text-[#C98F78] font-semibold opacity-0">
               Skincare, Refined.
             </div>
@@ -163,12 +152,9 @@ export default function Home() {
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform text-[#C98F78]" />
               </button>
             </div>
-
           </div>
 
-          {/* Right Column: Bottle Anchor */}
           <div className="hero-bottle-container lg:col-span-5 relative h-[500px] lg:h-[650px] flex items-center justify-center mt-8 lg:mt-0">
-            
             <div className="hero-circle absolute w-[350px] lg:w-[460px] h-[350px] lg:h-[460px] bg-gradient-to-tr from-[#E9D8D0]/60 via-[#C98F78]/15 to-transparent rounded-full blur-[80px] pointer-events-none opacity-0" />
 
             <div className="hero-circle absolute w-[300px] lg:w-[380px] h-[300px] lg:h-[380px] rounded-full border border-[#C98F78]/20 flex items-center justify-center pointer-events-none opacity-0">
@@ -178,7 +164,7 @@ export default function Home() {
             <div className="hero-bottle-float relative w-full h-[420px] lg:h-[540px] flex items-center justify-center z-10">
               <div ref={bottleRef} className="hero-bottle relative w-full h-full flex items-center justify-center opacity-0">
                 <Image 
-                  src="/images/products/serum-angle.png" 
+                  src="/images/Products/serum-angle.png" 
                   alt="AUREA Radiance Serum Campaign" 
                   fill
                   className="object-contain drop-shadow-[0_35px_45px_rgba(23,22,21,0.12)]"
@@ -195,7 +181,6 @@ export default function Home() {
                 Aurea / Radiance / 01
               </span>
             </div>
-
           </div>
 
         </div>
@@ -203,6 +188,12 @@ export default function Home() {
 
       {/* 01 — Philosophy Section */}
       <PhilosophySection />
+
+      {/* 02 — Featured Collection */}
+      <CollectionSection />
+
+      {/* 03 — Interactive Formulation Lab */}
+      <IngredientLab />
     </main>
   );
 }
