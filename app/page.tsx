@@ -7,6 +7,8 @@ import Navbar from "@/components/Navbar";
 import PhilosophySection from "@/components/PhilosophySection";
 import CollectionSection from "@/components/CollectionSection";
 import IngredientLab from "@/components/IngredientLab";
+import RitualSection from "@/components/RitualSection";
+import Footer from "@/components/Footer";
 import { ArrowRight } from "lucide-react";
 
 export default function Home() {
@@ -124,7 +126,7 @@ export default function Home() {
               Skincare, Refined.
             </div>
 
-            <h1 className="font-serif text-6xl md:text-7xl lg:text-8xl leading-[1.02] lg:leading-[0.95] font-normal tracking-tight text-[#171615] space-y-1">
+            <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl leading-[1.02] lg:leading-[0.95] font-normal tracking-tight text-[#171615] space-y-1">
               <span className="block overflow-hidden">
                 <span className="heading-line block opacity-0">Glow begins</span>
               </span>
@@ -154,14 +156,14 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="hero-bottle-container lg:col-span-5 relative h-[500px] lg:h-[650px] flex items-center justify-center mt-8 lg:mt-0">
-            <div className="hero-circle absolute w-[350px] lg:w-[460px] h-[350px] lg:h-[460px] bg-gradient-to-tr from-[#E9D8D0]/60 via-[#C98F78]/15 to-transparent rounded-full blur-[80px] pointer-events-none opacity-0" />
+          <div className="hero-bottle-container lg:col-span-5 relative h-[400px] lg:h-[650px] flex items-center justify-center mt-8 lg:mt-0">
+            <div className="hero-circle absolute w-[300px] lg:w-[460px] h-[300px] lg:h-[460px] bg-gradient-to-tr from-[#E9D8D0]/60 via-[#C98F78]/15 to-transparent rounded-full blur-[80px] pointer-events-none opacity-0" />
 
-            <div className="hero-circle absolute w-[300px] lg:w-[380px] h-[300px] lg:h-[380px] rounded-full border border-[#C98F78]/20 flex items-center justify-center pointer-events-none opacity-0">
-              <div className="w-[240px] lg:w-[300px] h-[240px] lg:h-[300px] rounded-full border border-dashed border-[#C98F78]/25 animate-[spin_75s_linear_infinite]" />
+            <div className="hero-circle absolute w-[260px] lg:w-[380px] h-[260px] lg:h-[380px] rounded-full border border-[#C98F78]/20 flex items-center justify-center pointer-events-none opacity-0">
+              <div className="w-[200px] lg:w-[300px] h-[200px] lg:h-[300px] rounded-full border border-dashed border-[#C98F78]/25 animate-[spin_75s_linear_infinite]" />
             </div>
 
-            <div className="hero-bottle-float relative w-full h-[420px] lg:h-[540px] flex items-center justify-center z-10">
+            <div className="hero-bottle-float relative w-full h-[360px] lg:h-[540px] flex items-center justify-center z-10">
               <div ref={bottleRef} className="hero-bottle relative w-full h-full flex items-center justify-center opacity-0">
                 <Image 
                   src="/images/Products/serum-angle.png" 
@@ -186,7 +188,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 01 — Philosophy Section */}
+      {/* 01 — Philosophy */}
       <PhilosophySection />
 
       {/* 02 — Featured Collection */}
@@ -194,6 +196,12 @@ export default function Home() {
 
       {/* 03 — Interactive Formulation Lab */}
       <IngredientLab />
+
+      {/* 04 — The Ritual */}
+      <RitualSection />
+
+      {/* Footer */}
+      <Footer />
     </main>
   );
 }
