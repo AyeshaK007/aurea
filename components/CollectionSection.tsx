@@ -3,7 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Plus, ArrowUpRight } from "lucide-react";
+import { Plus } from "lucide-react";
+import Link from "next/link";
 
 const PRODUCTS = [
   {
@@ -113,11 +114,12 @@ export default function CollectionSection() {
             const isHovered = hoveredId === product.id;
 
             return (
-              <div
+              <Link
                 key={product.id}
+                href={`/shop/${product.id}`}
                 onMouseEnter={() => setHoveredId(product.id)}
                 onMouseLeave={() => setHoveredId(null)}
-                className="product-card group relative flex flex-col justify-between bg-[#F8F5F1] border border-[#C98F78]/20 rounded-3xl p-6 hover:border-[#C98F78]/60 transition-all duration-500 opacity-0 hover:shadow-[0_15px_35px_rgba(201,143,120,0.08)]"
+                className="product-card group relative flex flex-col justify-between bg-[#F8F5F1] border border-[#C98F78]/20 rounded-3xl p-6 hover:border-[#C98F78]/60 transition-all duration-500 opacity-0 hover:shadow-[0_15px_35px_rgba(201,143,120,0.08)] cursor-pointer"
               >
                 {/* Header Info */}
                 <div className="flex justify-between items-start z-10">
@@ -130,9 +132,9 @@ export default function CollectionSection() {
                     </h3>
                   </div>
 
-                  <button className="w-8 h-8 rounded-full border border-[#C98F78]/30 flex items-center justify-center text-[#171615] group-hover:bg-[#171615] group-hover:text-[#F8F5F1] group-hover:border-[#171615] transition-all duration-300">
+                  <div className="w-8 h-8 rounded-full border border-[#C98F78]/30 flex items-center justify-center text-[#171615] group-hover:bg-[#171615] group-hover:text-[#F8F5F1] group-hover:border-[#171615] transition-all duration-300">
                     <Plus className="w-3.5 h-3.5" />
-                  </button>
+                  </div>
                 </div>
 
                 {/* Multi-Angle Stage */}
@@ -194,7 +196,7 @@ export default function CollectionSection() {
                   </div>
                 </div>
 
-              </div>
+              </Link>
             );
           })}
         </div>
