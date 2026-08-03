@@ -90,6 +90,7 @@ export default function RitualSection() {
 
   return (
     <section
+      id="ritual"
       ref={sectionRef}
       className="relative min-h-screen bg-[#F8F5F1] border-t border-[#C98F78]/15 flex items-center overflow-hidden py-20"
     >

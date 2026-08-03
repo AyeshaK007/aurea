@@ -188,6 +188,21 @@ export default function Home() {
         </div>
       </section>
 
+      <a 
+  href="#collection" 
+  onClick={(e) => {
+    e.preventDefault();
+    document.getElementById("collection")?.scrollIntoView({ behavior: "smooth" });
+  }}
+  className="hero-cta inline-block opacity-0 pt-4"
+>
+  <button className="group flex items-center gap-4 bg-[#171615] text-[#F8F5F1] px-8 py-4 rounded-full shadow-xl hover:bg-[#171615]/90 transition-all duration-300">
+    <span className="w-1.5 h-1.5 rounded-full bg-[#C98F78] inline-block" />
+    <span className="font-sans text-xs uppercase tracking-[0.25em]">Shop collection</span>
+    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform text-[#C98F78]" />
+  </button>
+</a>
+
       {/* 01 — Philosophy */}
       <PhilosophySection />
 

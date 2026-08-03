@@ -61,7 +61,8 @@ export default function IngredientLab() {
 
   return (
     <section 
-      ref={sectionRef} 
+      id="lab" 
+      ref={sectionRef}
       className="py-28 lg:py-40 bg-[#F8F5F1] border-t border-[#C98F78]/15 px-8 relative overflow-hidden"
     >
       <div className="max-w-7xl mx-auto space-y-16 lab-content opacity-0">

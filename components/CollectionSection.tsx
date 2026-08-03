@@ -86,6 +86,7 @@ export default function CollectionSection() {
 
   return (
     <section 
+      id="collection"
       ref={sectionRef} 
       className="py-28 lg:py-40 bg-[#F8F5F1] border-t border-[#C98F78]/15 px-8 relative"
     >

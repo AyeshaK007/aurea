@@ -68,6 +68,7 @@ export default function PhilosophySection() {
 
   return (
     <section 
+      id="philosophy"
       ref={sectionRef} 
       className="relative py-28 lg:py-40 bg-[#F8F5F1] border-t border-[#C98F78]/15 px-8 overflow-hidden"
     >
