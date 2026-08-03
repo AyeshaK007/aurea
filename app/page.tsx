@@ -91,8 +91,9 @@ export default function Home() {
       });
     }, containerRef);
 
+    // Disable mouse parallax on touch/mobile devices for smoother performance
     const handleMouseMove = (e: MouseEvent) => {
-      if (!bottleRef.current) return;
+      if (!bottleRef.current || window.innerWidth < 768) return;
       const { clientX, clientY } = e;
       const moveX = (clientX / window.innerWidth - 0.5) * 20;
       const moveY = (clientY / window.innerHeight - 0.5) * 20;
@@ -118,15 +119,16 @@ export default function Home() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="hero-section relative min-h-screen overflow-hidden pt-32 lg:pt-36 pb-20">
-        <div className="max-w-7xl mx-auto px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center min-h-[calc(100vh-10rem)]">
+      <section className="hero-section relative min-h-screen overflow-hidden pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-center min-h-[calc(100vh-8rem)]">
           
-          <div className="lg:col-span-7 flex flex-col justify-center space-y-6 z-10 pt-12 lg:pt-0">
-            <div className="hero-eyebrow font-sans uppercase tracking-[0.3em] text-[11px] text-[#C98F78] font-semibold opacity-0">
+          {/* Hero Copy */}
+          <div className="lg:col-span-7 flex flex-col justify-center space-y-5 sm:space-y-6 z-10 pt-6 sm:pt-12 lg:pt-0">
+            <div className="hero-eyebrow font-sans uppercase tracking-[0.3em] text-[10px] sm:text-[11px] text-[#C98F78] font-semibold opacity-0">
               Skincare, Refined.
             </div>
 
-            <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl leading-[1.02] lg:leading-[0.95] font-normal tracking-tight text-[#171615] space-y-1">
+            <h1 className="font-serif text-3xl sm:text-5xl md:text-7xl lg:text-8xl leading-[1.1] sm:leading-[1.02] lg:leading-[0.95] font-normal tracking-tight text-[#171615] space-y-1">
               <span className="block overflow-hidden">
                 <span className="heading-line block opacity-0">Glow begins</span>
               </span>
@@ -138,48 +140,60 @@ export default function Home() {
               </span>
             </h1>
 
-            <div className="hero-desc space-y-3 opacity-0 pt-2">
-              <div className="font-sans text-xs uppercase tracking-[0.25em] text-[#B88968] font-medium">
+            <div className="hero-desc space-y-2 sm:space-y-3 opacity-0 pt-1 sm:pt-2">
+              <div className="font-sans text-[10px] sm:text-xs uppercase tracking-[0.25em] text-[#B88968] font-medium">
                 Minimal science. Maximum results.
               </div>
-              <p className="font-sans text-sm text-[#171615]/70 max-w-md leading-relaxed">
+              <p className="font-sans text-xs sm:text-sm text-[#171615]/70 max-w-md leading-relaxed">
                 Formulated with biomimetic peptides and botanical essences. A considered approach to radiant, healthy-looking skin.
               </p>
             </div>
 
-            <div className="hero-cta opacity-0 pt-4">
-              <button className="group flex items-center gap-4 bg-[#171615] text-[#F8F5F1] px-8 py-4 rounded-full shadow-xl hover:bg-[#171615]/90 transition-all duration-300">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#C98F78] inline-block" />
-                <span className="font-sans text-xs uppercase tracking-[0.25em]">Shop collection</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform text-[#C98F78]" />
-              </button>
+            <div className="hero-cta opacity-0 pt-2 sm:pt-4">
+              <a
+                href="#collection"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById("collection")?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="inline-block"
+              >
+                <button className="group flex items-center gap-3.5 bg-[#171615] text-[#F8F5F1] px-6 sm:px-8 py-3.5 sm:py-4 rounded-full shadow-xl hover:bg-[#171615]/90 transition-all duration-300">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#C98F78] inline-block" />
+                  <span className="font-sans text-[11px] sm:text-xs uppercase tracking-[0.25em]">
+                    Shop collection
+                  </span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform text-[#C98F78]" />
+                </button>
+              </a>
             </div>
           </div>
 
-          <div className="hero-bottle-container lg:col-span-5 relative h-[400px] lg:h-[650px] flex items-center justify-center mt-8 lg:mt-0">
-            <div className="hero-circle absolute w-[300px] lg:w-[460px] h-[300px] lg:h-[460px] bg-gradient-to-tr from-[#E9D8D0]/60 via-[#C98F78]/15 to-transparent rounded-full blur-[80px] pointer-events-none opacity-0" />
+          {/* Hero Bottle Stage */}
+          <div className="hero-bottle-container lg:col-span-5 relative h-[280px] sm:h-[380px] lg:h-[650px] flex items-center justify-center mt-2 lg:mt-0">
+            <div className="hero-circle absolute w-[240px] sm:w-[300px] lg:w-[460px] h-[240px] sm:h-[300px] lg:h-[460px] bg-gradient-to-tr from-[#E9D8D0]/60 via-[#C98F78]/15 to-transparent rounded-full blur-[60px] sm:blur-[80px] pointer-events-none opacity-0" />
 
-            <div className="hero-circle absolute w-[260px] lg:w-[380px] h-[260px] lg:h-[380px] rounded-full border border-[#C98F78]/20 flex items-center justify-center pointer-events-none opacity-0">
-              <div className="w-[200px] lg:w-[300px] h-[200px] lg:h-[300px] rounded-full border border-dashed border-[#C98F78]/25 animate-[spin_75s_linear_infinite]" />
+            <div className="hero-circle absolute w-[220px] sm:w-[260px] lg:w-[380px] h-[220px] sm:h-[260px] lg:h-[380px] rounded-full border border-[#C98F78]/20 flex items-center justify-center pointer-events-none opacity-0">
+              <div className="w-[160px] sm:w-[200px] lg:w-[300px] h-[160px] sm:h-[200px] lg:h-[300px] rounded-full border border-dashed border-[#C98F78]/25 animate-[spin_75s_linear_infinite]" />
             </div>
 
-            <div className="hero-bottle-float relative w-full h-[360px] lg:h-[540px] flex items-center justify-center z-10">
+            <div className="hero-bottle-float relative w-full h-[260px] sm:h-[360px] lg:h-[540px] flex items-center justify-center z-10">
               <div ref={bottleRef} className="hero-bottle relative w-full h-full flex items-center justify-center opacity-0">
                 <Image 
                   src="/images/Products/serum-angle.png" 
                   alt="AUREA Radiance Serum Campaign" 
                   fill
-                  className="object-contain drop-shadow-[0_35px_45px_rgba(23,22,21,0.12)]"
+                  className="object-contain drop-shadow-[0_25px_35px_rgba(23,22,21,0.12)]"
                   priority
                 />
               </div>
             </div>
 
-            <div className="hero-circle absolute bottom-4 lg:bottom-12 w-44 lg:w-52 h-5 bg-[#171615]/10 rounded-full blur-xl pointer-events-none opacity-0" />
+            <div className="hero-circle absolute bottom-2 lg:bottom-12 w-36 sm:w-44 lg:w-52 h-4 sm:h-5 bg-[#171615]/10 rounded-full blur-xl pointer-events-none opacity-0" />
 
-            <div className="hero-badge absolute bottom-2 lg:bottom-8 right-0 lg:right-2 bg-[#F8F5F1]/90 backdrop-blur-md px-4 py-2 rounded-full border border-[#C98F78]/30 shadow-sm flex items-center gap-3 z-20 opacity-0">
+            <div className="hero-badge absolute bottom-0 lg:bottom-8 right-2 sm:right-0 lg:right-2 bg-[#F8F5F1]/90 backdrop-blur-md px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full border border-[#C98F78]/30 shadow-sm flex items-center gap-2.5 sm:gap-3 z-20 opacity-0">
               <span className="w-1.5 h-1.5 rounded-full bg-[#C98F78]" />
-              <span className="font-sans text-[10px] uppercase tracking-[0.3em] text-[#171615]/80 font-semibold">
+              <span className="font-sans text-[9px] sm:text-[10px] uppercase tracking-[0.25em] sm:tracking-[0.3em] text-[#171615]/80 font-semibold">
                 Aurea / Radiance / 01
               </span>
             </div>
@@ -187,21 +201,6 @@ export default function Home() {
 
         </div>
       </section>
-
-      <a 
-  href="#collection" 
-  onClick={(e) => {
-    e.preventDefault();
-    document.getElementById("collection")?.scrollIntoView({ behavior: "smooth" });
-  }}
-  className="hero-cta inline-block opacity-0 pt-4"
->
-  <button className="group flex items-center gap-4 bg-[#171615] text-[#F8F5F1] px-8 py-4 rounded-full shadow-xl hover:bg-[#171615]/90 transition-all duration-300">
-    <span className="w-1.5 h-1.5 rounded-full bg-[#C98F78] inline-block" />
-    <span className="font-sans text-xs uppercase tracking-[0.25em]">Shop collection</span>
-    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform text-[#C98F78]" />
-  </button>
-</a>
 
       {/* 01 — Philosophy */}
       <PhilosophySection />
