@@ -23,61 +23,63 @@ export default function Home() {
 
       tl.fromTo(
         ".nav-container",
-        { y: -30, opacity: 0 },
+        { y: -20, opacity: 0 },
         { y: 0, opacity: 1, duration: 1 }
       )
       .fromTo(
         ".hero-eyebrow",
-        { y: 20, opacity: 0 },
+        { y: 15, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.8 },
-        "-=0.8"
+        "-=0.7"
       )
       .fromTo(
         ".heading-line",
         { y: "100%", opacity: 0 },
         { y: "0%", opacity: 1, duration: 1.1, stagger: 0.12 },
-        "-=0.65"
+        "-=0.6"
       )
       .fromTo(
         ".hero-desc",
-        { y: 20, opacity: 0 },
+        { y: 15, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.8 },
         "-=0.5"
       )
       .fromTo(
         ".hero-cta",
-        { y: 20, opacity: 0 },
+        { y: 15, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.8 },
         "-=0.6"
       )
       .fromTo(
         ".hero-bottle",
-        { scale: 0.88, opacity: 0, y: 60, rotation: -6 },
-        { scale: 1, opacity: 1, y: 0, rotation: 0, duration: 1.8, ease: "power2.out" },
-        1.0
+        { scale: 0.92, opacity: 0, y: 40, rotation: -3 },
+        { scale: 1, opacity: 1, y: 0, rotation: 0, duration: 1.6, ease: "power2.out" },
+        0.8
       )
       .fromTo(
         ".hero-circle",
-        { scale: 0.6, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 1.8, ease: "power2.out" },
+        { scale: 0.7, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 1.6, ease: "power2.out" },
         "<"
       )
       .fromTo(
         ".hero-badge",
-        { y: 15, opacity: 0 },
+        { y: 12, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.8 },
         "-=0.6"
       );
 
+      // Gentler, more subtle idle float
       gsap.to(".hero-bottle-float", {
-        y: -14,
-        rotation: 1.5,
-        duration: 4.5,
+        y: -8,
+        rotation: 0.8,
+        duration: 5.5,
         repeat: -1,
         yoyo: true,
         ease: "sine.easeInOut",
       });
 
+      // Smooth scroll parallax exit
       gsap.to(".hero-bottle-container", {
         scrollTrigger: {
           trigger: ".hero-section",
@@ -85,23 +87,23 @@ export default function Home() {
           end: "bottom top",
           scrub: 1.2,
         },
-        y: 90,
-        rotation: 4,
+        y: 70,
+        opacity: 0.85,
         ease: "none",
       });
     }, containerRef);
 
-    // Disable mouse parallax on touch/mobile devices for smoother performance
+    // Subtle desktop-only mouse parallax
     const handleMouseMove = (e: MouseEvent) => {
       if (!bottleRef.current || window.innerWidth < 768) return;
       const { clientX, clientY } = e;
-      const moveX = (clientX / window.innerWidth - 0.5) * 20;
-      const moveY = (clientY / window.innerHeight - 0.5) * 20;
+      const moveX = (clientX / window.innerWidth - 0.5) * 12;
+      const moveY = (clientY / window.innerHeight - 0.5) * 12;
 
       gsap.to(bottleRef.current, {
         x: moveX,
         y: moveY,
-        duration: 1.2,
+        duration: 1.8,
         ease: "power2.out",
       });
     };
@@ -158,7 +160,7 @@ export default function Home() {
                 }}
                 className="inline-block"
               >
-                <button className="group flex items-center gap-3.5 bg-[#171615] text-[#F8F5F1] px-6 sm:px-8 py-3.5 sm:py-4 rounded-full shadow-xl hover:bg-[#171615]/90 transition-all duration-300">
+                <button className="group flex items-center gap-3.5 bg-[#171615] text-[#F8F5F1] px-6 sm:px-8 py-3.5 sm:py-4 rounded-full shadow-xl hover:bg-[#171615]/90 transition-all duration-300 cursor-pointer">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#C98F78] inline-block" />
                   <span className="font-sans text-[11px] sm:text-xs uppercase tracking-[0.25em]">
                     Shop collection
@@ -183,7 +185,7 @@ export default function Home() {
                   src="/images/Products/serum-angle.png" 
                   alt="AUREA Radiance Serum Campaign" 
                   fill
-                  className="object-contain drop-shadow-[0_25px_35px_rgba(23,22,21,0.12)]"
+                  className="object-contain hero-editorial-shadow"
                   priority
                 />
               </div>

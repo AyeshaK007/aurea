@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { ShoppingBag, X, ArrowRight, Menu } from "lucide-react";
 
@@ -11,6 +11,16 @@ interface NavbarProps {
 export default function Navbar({ cartCount = 0 }: NavbarProps) {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScrollState = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener("scroll", handleScrollState);
+    return () => window.removeEventListener("scroll", handleScrollState);
+  }, []);
 
   const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
     if (window.location.pathname === "/") {
@@ -26,9 +36,15 @@ export default function Navbar({ cartCount = 0 }: NavbarProps) {
   return (
     <>
       {/* Fixed Outer Wrapper */}
-      <header className="nav-container fixed top-3 sm:top-6 inset-x-0 z-50 px-3 sm:px-6 pointer-events-none">
+      <header className="nav-container fixed top-3 sm:top-5 inset-x-0 z-50 px-3 sm:px-6 pointer-events-none transition-all duration-500">
         <nav className="max-w-7xl mx-auto w-full pointer-events-auto">
-          <div className="bg-[#F8F5F1]/90 backdrop-blur-md border border-[#C98F78]/20 rounded-full px-4 sm:px-8 py-3 flex items-center justify-between shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300">
+          <div 
+            className={`bg-[#F8F5F1]/85 backdrop-blur-md border border-[#C98F78]/20 rounded-full px-4 sm:px-8 flex items-center justify-between transition-all duration-500 ${
+              isScrolled 
+                ? "py-2 sm:py-2.5 shadow-[0_12px_35px_rgba(23,22,21,0.08)] bg-[#F8F5F1]/92 border-[#C98F78]/30" 
+                : "py-3 sm:py-3.5 shadow-[0_8px_30px_rgba(0,0,0,0.04)]"
+            }`}
+          >
             
             {/* Mobile Menu Hamburger Toggle */}
             <button
@@ -39,9 +55,9 @@ export default function Navbar({ cartCount = 0 }: NavbarProps) {
               {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
 
-            {/* Brand Logo */}
+            {/* Brand Logo - More Prominent Editorial Styling */}
             <Link href="/" className="flex items-center gap-2 group">
-              <span className="font-serif text-lg sm:text-xl tracking-wider text-[#171615] group-hover:text-[#C98F78] transition-colors">
+              <span className="font-serif text-xl sm:text-2xl tracking-[0.18em] text-[#171615] group-hover:text-[#C98F78] transition-colors font-medium">
                 AUREA
               </span>
             </Link>
@@ -51,28 +67,28 @@ export default function Navbar({ cartCount = 0 }: NavbarProps) {
               <Link
                 href="#collection"
                 onClick={(e) => handleScroll(e, "collection")}
-                className="font-sans text-[11px] uppercase tracking-[0.25em] text-[#171615]/70 hover:text-[#C98F78] transition-colors font-medium"
+                className="font-sans text-[11px] uppercase tracking-[0.25em] text-[#171615]/75 hover:text-[#C98F78] transition-colors font-medium"
               >
                 Shop
               </Link>
               <Link
                 href="#philosophy"
                 onClick={(e) => handleScroll(e, "philosophy")}
-                className="font-sans text-[11px] uppercase tracking-[0.25em] text-[#171615]/70 hover:text-[#C98F78] transition-colors font-medium"
+                className="font-sans text-[11px] uppercase tracking-[0.25em] text-[#171615]/75 hover:text-[#C98F78] transition-colors font-medium"
               >
                 Philosophy
               </Link>
               <Link
                 href="#lab"
                 onClick={(e) => handleScroll(e, "lab")}
-                className="font-sans text-[11px] uppercase tracking-[0.25em] text-[#171615]/70 hover:text-[#C98F78] transition-colors font-medium"
+                className="font-sans text-[11px] uppercase tracking-[0.25em] text-[#171615]/75 hover:text-[#C98F78] transition-colors font-medium"
               >
                 Ingredients
               </Link>
               <Link
                 href="#ritual"
                 onClick={(e) => handleScroll(e, "ritual")}
-                className="font-sans text-[11px] uppercase tracking-[0.25em] text-[#171615]/70 hover:text-[#C98F78] transition-colors font-medium"
+                className="font-sans text-[11px] uppercase tracking-[0.25em] text-[#171615]/75 hover:text-[#C98F78] transition-colors font-medium"
               >
                 Journal
               </Link>
@@ -81,7 +97,7 @@ export default function Navbar({ cartCount = 0 }: NavbarProps) {
             {/* Cart Button */}
             <button
               onClick={() => setIsCartOpen(true)}
-              className="group flex items-center gap-2 border border-[#C98F78]/30 px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full hover:bg-[#171615] hover:border-[#171615] transition-all duration-300 cursor-pointer"
+              className="group flex items-center gap-2 border border-[#C98F78]/35 px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full hover:bg-[#171615] hover:border-[#171615] transition-all duration-300 cursor-pointer"
             >
               <ShoppingBag className="w-3.5 h-3.5 text-[#C98F78] group-hover:text-[#F8F5F1] transition-colors" />
               <span className="font-sans text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-[#171615] group-hover:text-[#F8F5F1] transition-colors font-semibold">
@@ -129,7 +145,7 @@ export default function Navbar({ cartCount = 0 }: NavbarProps) {
         </div>
       )}
 
-      {/* Slide-out Cart Overlay / Drawer */}
+      {/* Slide-out Cart Drawer */}
       {isCartOpen && (
         <div className="fixed inset-0 z-[100] flex justify-end">
           <div 

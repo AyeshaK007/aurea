@@ -15,3 +15,19 @@ body {
   background-color: #F8F5F1;
   color: #171615;
 }
+/* Soft studio glow + slight contrast softening for luxury presentation */
+.product-editorial-glow {
+  filter: drop-shadow(0 20px 30px rgba(23, 22, 21, 0.08)) contrast(0.98) brightness(1.02);
+  transition: filter 0.5s ease-out, transform 0.5s ease-out;
+  will-change: filter, transform;
+}
+
+/* Subtle warm rose-gold atmosphere lift on hover */
+.product-editorial-glow:hover {
+  filter: drop-shadow(0 28px 40px rgba(201, 143, 120, 0.18)) contrast(1) brightness(1.03);
+}
+
+/* Atmospheric soft shadow for floating hero elements */
+.hero-editorial-shadow {
+  filter: drop-shadow(0 30px 45px rgba(23, 22, 21, 0.10)) drop-shadow(0 10px 15px rgba(201, 143, 120, 0.12));
+}

@@ -1,48 +1,76 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
-import Image from "next/image";
+
+import { useState, useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Sparkles, CheckCircle2 } from "lucide-react";
 
-const INGREDIENTS = [
+interface Ingredient {
+  id: string;
+  name: string;
+  category: string;
+  percentage: string;
+  role: string;
+  description: string;
+  benefits: string[];
+}
+
+const ingredients: Ingredient[] = [
   {
     id: "peptides",
-    num: "01",
-    name: "Biomimetic Peptides",
-    role: "Cellular Communication",
-    desc: "Synthesized amino acid chains designed to mimic natural signaling pathways, supporting skin firming and structural resilience.",
-    stat: "+42% Density Support",
+    name: "Biomimetic Hexapeptide-8",
+    category: "Cellular Repair",
+    percentage: "5.0%",
+    role: "Collagen Support & Line Smoothing",
+    description:
+      "A peptide sequence designed to relax micro-tension in the skin, reducing expression lines and encouraging natural collagen synthesis.",
+    benefits: ["Smoothes surface expression lines", "Enhances dermal elasticity", "Reinforces skin scaffold"],
   },
   {
     id: "niacinamide",
-    num: "02",
-    name: "Niacinamide 5%",
-    role: "Barrier & Tone Refinement",
-    desc: "Ultra-pure Vitamin B3 that mitigates moisture loss, softens hyperpigmentation, and balances excess sebum production.",
-    stat: "98% Purity Grade",
+    name: "Ultra-Pure Niacinamide",
+    category: "Barrier Strength",
+    percentage: "4.0%",
+    role: "Tone Refinement & Lipid Barrier",
+    description:
+      "High-grade Vitamin B3 that calms inflammation, minimizes pore appearance, and stimulates essential ceramide synthesis.",
+    benefits: ["Fades post-inflammatory redness", "Tightens dilated pores", "Locks in cellular moisture"],
   },
   {
-    id: "botanicals",
-    num: "03",
-    name: "Botanical Hydrosols",
-    role: "Phyto-Nourishment",
-    desc: "Cold-pressed rose water and camellia seed extracts providing soothing polyphenols to combat environmental stressors.",
-    stat: "100% Organic Origin",
+    id: "hyaluronic",
+    name: "Multi-Weight Hyaluronic Acid",
+    category: "Deep Hydration",
+    percentage: "2.5%",
+    role: "Multi-Depth Moisture Plumping",
+    description:
+      "Three distinct molecular weights designed to penetrate shallow, medium, and deep epidermal layers for instant surface plumping and long-term retention.",
+    benefits: ["Immediate surface radiance", "24-hour hydration lock", "Soothes dry micro-cracks"],
+  },
+  {
+    id: "centella",
+    name: "Fermented Centella Asiatica",
+    category: "Botanical Calming",
+    percentage: "3.0%",
+    role: "Soothing & Anti-Redness",
+    description:
+      "Biologically fermented tiger grass extract rich in Madecassoside to instantly pacify stressed or reactive skin environments.",
+    benefits: ["Pacifies immediate flare-ups", "Accelerates barrier repair", "Protects against urban stress"],
   },
 ];
 
 export default function IngredientLab() {
-  const [activeId, setActiveId] = useState("peptides");
+  const [selectedId, setSelectedId] = useState<string>(ingredients[0].id);
   const sectionRef = useRef<HTMLDivElement>(null);
-  const activeIngredient = INGREDIENTS.find((i) => i.id === activeId) || INGREDIENTS[0];
+
+  const activeIngredient = ingredients.find((i) => i.id === selectedId) || ingredients[0];
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
     const ctx = gsap.context(() => {
       gsap.fromTo(
-        ".lab-content",
-        { y: 40, opacity: 0 },
+        ".lab-header",
+        { y: 30, opacity: 0 },
         {
           y: 0,
           opacity: 1,
@@ -50,7 +78,7 @@ export default function IngredientLab() {
           ease: "power3.out",
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: "top 70%",
+            start: "top 80%",
           },
         }
       );
@@ -60,97 +88,103 @@ export default function IngredientLab() {
   }, []);
 
   return (
-    <section 
-      id="lab" 
+    <section
+      id="lab"
       ref={sectionRef}
-      className="py-28 lg:py-40 bg-[#F8F5F1] border-t border-[#C98F78]/15 px-8 relative overflow-hidden"
+      className="py-24 sm:py-32 bg-[#F8F5F1] relative border-t border-[#C98F78]/15"
     >
-      <div className="max-w-7xl mx-auto space-y-16 lab-content opacity-0">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8">
         
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div className="space-y-3">
-            <span className="font-sans uppercase tracking-[0.35em] text-[11px] text-[#C98F78] font-semibold">
-              03 / Formulation Lab
-            </span>
-            <h2 className="font-serif text-4xl md:text-5xl font-normal text-[#171615] tracking-tight">
-              Clinical precision. <br />
-              <span className="italic text-[#B88968] font-light">Botanical harmony.</span>
-            </h2>
+        {/* Header */}
+        <div className="lab-header max-w-2xl mb-14 sm:mb-16 space-y-3 opacity-0">
+          <div className="font-sans uppercase tracking-[0.3em] text-[10px] sm:text-[11px] text-[#C98F78] font-semibold">
+            03 / Formulation Lab
           </div>
-
-          <p className="font-sans text-xs uppercase tracking-[0.2em] text-[#171615]/60 max-w-xs leading-relaxed">
-            Hover over key actives to explore how each compound interacts with the skin structure.
+          <h2 className="font-serif text-3xl sm:text-5xl text-[#171615] leading-[1.1]">
+            Active Concentration Transparency
+          </h2>
+          <p className="font-sans text-xs sm:text-sm text-[#171615]/70 leading-relaxed pt-1">
+            Hover or tap any key active component to inspect its targeted biochemical mechanism.
           </p>
         </div>
 
-        {/* Interactive Lab Stage */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center bg-[#F8F5F1] border border-[#C98F78]/20 rounded-3xl p-8 lg:p-12 relative">
+        {/* Interactive Lab Showcase */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
-          {/* Left: Ingredient Selector List */}
-          <div className="lg:col-span-5 space-y-4 z-10">
-            {INGREDIENTS.map((item) => {
-              const isActive = item.id === activeId;
+          {/* Ingredient Selector List */}
+          <div className="lg:col-span-5 space-y-3">
+            {ingredients.map((item) => {
+              const isSelected = item.id === selectedId;
               return (
-                <div
+                <button
                   key={item.id}
-                  onMouseEnter={() => setActiveId(item.id)}
-                  onClick={() => setActiveId(item.id)}
-                  className={`cursor-pointer p-6 rounded-2xl border transition-all duration-500 ${
-                    isActive
-                      ? "bg-[#F8F5F1] border-[#C98F78] shadow-[0_10px_25px_rgba(201,143,120,0.1)] translate-x-2"
-                      : "border-transparent hover:border-[#C98F78]/30"
+                  onClick={() => setSelectedId(item.id)}
+                  onMouseEnter={() => setSelectedId(item.id)}
+                  className={`w-full text-left p-5 sm:p-6 rounded-2xl border transition-all duration-300 flex items-center justify-between cursor-pointer ${
+                    isSelected
+                      ? "bg-[#171615] text-[#F8F5F1] border-[#171615] shadow-lg translate-x-1 sm:translate-x-2"
+                      : "bg-[#F8F5F1] text-[#171615] border-[#C98F78]/25 hover:border-[#C98F78] hover:bg-[#E9D8D0]/30"
                   }`}
                 >
-                  <div className="flex items-center justify-between">
-                    <span className="font-serif text-sm italic text-[#C98F78]">{item.num}</span>
-                    <span className="font-sans text-[10px] uppercase tracking-[0.2em] text-[#171615]/50">
-                      {item.role}
+                  <div className="space-y-1">
+                    <span
+                      className={`font-mono text-[10px] uppercase tracking-[0.2em] ${
+                        isSelected ? "text-[#C98F78]" : "text-[#B88968]"
+                      }`}
+                    >
+                      {item.category}
                     </span>
+                    <h4 className="font-serif text-lg sm:text-xl">{item.name}</h4>
                   </div>
-                  <h3 className="font-serif text-2xl text-[#171615] mt-2 font-normal">
-                    {item.name}
-                  </h3>
-                </div>
+
+                  <div
+                    className={`px-3 py-1 rounded-full font-mono text-xs font-semibold ${
+                      isSelected
+                        ? "bg-[#C98F78] text-[#F8F5F1]"
+                        : "bg-[#E9D8D0]/60 text-[#171615]"
+                    }`}
+                  >
+                    {item.percentage}
+                  </div>
+                </button>
               );
             })}
           </div>
 
-          {/* Center & Right: Interactive Focus Card & Dropper Asset */}
-          <div className="lg:col-span-7 flex flex-col md:flex-row items-center gap-8 justify-between relative">
-            
-            {/* Visual Bottle Stage */}
-            <div className="relative w-full h-[300px] md:h-[380px] flex items-center justify-center">
-              <div className="absolute w-56 h-56 rounded-full bg-[#E9D8D0]/60 blur-3xl pointer-events-none" />
-              <Image
-                src="/images/Products/serum-dropper.png"
-                alt="AUREA Active Formulation Dropper"
-                fill
-                className="object-contain drop-shadow-[0_20px_30px_rgba(23,22,21,0.12)] transition-transform duration-700"
-              />
+          {/* Active Detail Display Panel */}
+          <div className="lg:col-span-7 bg-[#E9D8D0]/40 border border-[#C98F78]/30 rounded-3xl p-7 sm:p-10 shadow-sm transition-all duration-500">
+            <div className="flex items-center gap-2 mb-4">
+              <Sparkles className="w-4 h-4 text-[#C98F78]" />
+              <span className="font-sans text-[10px] uppercase tracking-[0.25em] text-[#C98F78] font-semibold">
+                Active Specification — {activeIngredient.percentage} Concentration
+              </span>
             </div>
 
-            {/* Active Details Box */}
-            <div className="w-full md:w-80 space-y-6 bg-[#F8F5F1] border border-[#C98F78]/25 p-6 rounded-2xl backdrop-blur-md z-10">
-              <div className="space-y-2">
-                <span className="font-sans text-[10px] uppercase tracking-[0.25em] text-[#C98F78] font-bold">
-                  Active Mechanism
-                </span>
-                <p className="font-sans text-xs text-[#171615]/80 leading-relaxed font-normal">
-                  {activeIngredient.desc}
-                </p>
-              </div>
+            <h3 className="font-serif text-2xl sm:text-4xl text-[#171615] mb-2">
+              {activeIngredient.name}
+            </h3>
 
-              <div className="border-t border-[#C98F78]/15 pt-4 flex items-center justify-between">
-                <span className="font-sans text-[10px] uppercase tracking-[0.2em] text-[#171615]/50 font-semibold">
-                  Efficacy Metric
-                </span>
-                <span className="font-serif text-sm text-[#171615] font-medium">
-                  {activeIngredient.stat}
-                </span>
+            <p className="font-sans text-xs uppercase tracking-[0.2em] text-[#B88968] font-medium mb-6">
+              Primary Role: {activeIngredient.role}
+            </p>
+
+            <p className="font-sans text-xs sm:text-sm text-[#171615]/80 leading-relaxed mb-8 border-t border-[#C98F78]/20 pt-6">
+              {activeIngredient.description}
+            </p>
+
+            <div className="space-y-3">
+              <span className="font-sans text-[10px] uppercase tracking-[0.25em] text-[#171615]/60 font-semibold block">
+                Key Clinical Benefits
+              </span>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {activeIngredient.benefits.map((benefit, idx) => (
+                  <div key={idx} className="flex items-center gap-2.5 bg-[#F8F5F1] p-3 rounded-xl border border-[#C98F78]/20">
+                    <CheckCircle2 className="w-4 h-4 text-[#C98F78] shrink-0" />
+                    <span className="font-sans text-xs text-[#171615]/85">{benefit}</span>
+                  </div>
+                ))}
               </div>
             </div>
-
           </div>
 
         </div>
