@@ -1,4 +1,5 @@
 "use client";
+
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import gsap from "gsap";
@@ -6,7 +7,19 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Plus } from "lucide-react";
 import Link from "next/link";
 
-const PRODUCTS = [
+interface Product {
+  id: string;
+  name: string;
+  category: string;
+  ingredients: string;
+  size: string;
+  price: string;
+  frontImage: string;
+  angleImage: string;
+  detailTag: string;
+}
+
+const PRODUCTS: Product[] = [
   {
     id: "01",
     name: "Radiance Serum",
@@ -120,6 +133,7 @@ export default function CollectionSection() {
                 href={`/shop/${product.id}`}
                 onMouseEnter={() => setHoveredId(product.id)}
                 onMouseLeave={() => setHoveredId(null)}
+                onTouchStart={() => setHoveredId(product.id === hoveredId ? null : product.id)}
                 className="product-card group relative flex flex-col justify-between bg-[#F8F5F1] border border-[#C98F78]/20 rounded-3xl p-6 hover:border-[#C98F78]/60 transition-all duration-500 opacity-0 hover:shadow-[0_15px_35px_rgba(201,143,120,0.08)] cursor-pointer"
               >
                 {/* Header Info */}
@@ -139,9 +153,9 @@ export default function CollectionSection() {
                 </div>
 
                 {/* Multi-Angle Stage */}
-                <div className="relative h-[280px] my-6 flex items-center justify-center overflow-hidden">
+                <div className="relative h-[280px] my-6 flex items-center justify-center overflow-hidden rounded-2xl bg-[#F4EFEA]/40 transition-colors duration-500 group-hover:bg-[#E9D8D0]/30">
                   {/* Background Soft Glow */}
-                  <div className="absolute w-40 h-40 rounded-full bg-[#E9D8D0]/40 blur-2xl group-hover:scale-125 transition-transform duration-700 pointer-events-none" />
+                  <div className="absolute w-40 h-40 rounded-full bg-[#E9D8D0]/50 blur-2xl group-hover:scale-125 transition-transform duration-700 pointer-events-none" />
 
                   {/* Primary Front Image */}
                   <div 
@@ -153,28 +167,28 @@ export default function CollectionSection() {
                       src={product.frontImage}
                       alt={`${product.name} Front`}
                       fill
-                      className="object-contain drop-shadow-[0_15px_25px_rgba(23,22,21,0.08)]"
+                      className="object-contain drop-shadow-[0_15px_25px_rgba(23,22,21,0.08)] p-2"
                     />
                   </div>
 
                   {/* Hover Angle Reveal Image */}
                   <div 
                     className={`absolute inset-0 transition-all duration-700 ease-out flex items-center justify-center ${
-                      isHovered ? "opacity-100 scale-105 rotate-0" : "opacity-0 scale-110 -rotate-3"
+                      isHovered ? "opacity-100 scale-105 rotate-0" : "opacity-0 scale-110 -rotate-3 pointer-events-none"
                     }`}
                   >
                     <Image
                       src={product.angleImage}
                       alt={`${product.name} Angle`}
                       fill
-                      className="object-contain drop-shadow-[0_25px_35px_rgba(23,22,21,0.12)]"
+                      className="object-contain drop-shadow-[0_25px_35px_rgba(23,22,21,0.12)] p-2"
                     />
                   </div>
 
                   {/* Angle Label Pill */}
                   <div 
-                    className={`absolute bottom-2 bg-[#F8F5F1]/90 backdrop-blur-md px-3 py-1 rounded-full border border-[#C98F78]/30 text-[9px] font-sans uppercase tracking-[0.2em] text-[#C98F78] font-semibold transition-all duration-500 ${
-                      isHovered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+                    className={`absolute bottom-3 bg-[#F8F5F1]/90 backdrop-blur-md px-3 py-1 rounded-full border border-[#C98F78]/30 text-[9px] font-sans uppercase tracking-[0.2em] text-[#C98F78] font-semibold transition-all duration-500 ${
+                      isHovered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none"
                     }`}
                   >
                     {product.detailTag}
