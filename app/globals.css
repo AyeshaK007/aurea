@@ -12,9 +12,21 @@
 }
 
 body {
-  background-color: #F8F5F1;
-  color: #171615;
+  background-color: var(--color-bg-ivory);
+  color: var(--color-text-main);
 }
+
+/* Accessibility Focus States */
+*:focus-visible {
+  outline: 2px solid #171615;
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
 /* Soft studio glow + slight contrast softening for luxury presentation */
 .product-editorial-glow {
   filter: drop-shadow(0 20px 30px rgba(23, 22, 21, 0.08)) contrast(0.98) brightness(1.02);
@@ -22,7 +34,6 @@ body {
   will-change: filter, transform;
 }
 
-/* Subtle warm rose-gold atmosphere lift on hover */
 .product-editorial-glow:hover {
   filter: drop-shadow(0 28px 40px rgba(201, 143, 120, 0.18)) contrast(1) brightness(1.03);
 }
@@ -30,4 +41,40 @@ body {
 /* Atmospheric soft shadow for floating hero elements */
 .hero-editorial-shadow {
   filter: drop-shadow(0 30px 45px rgba(23, 22, 21, 0.10)) drop-shadow(0 10px 15px rgba(201, 143, 120, 0.12));
+}
+
+/* Global Utility & Micro-Interaction Classes */
+.hover-card-zoom {
+  overflow: hidden;
+}
+
+.hover-card-zoom img {
+  transition: transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hover-card-zoom:hover img {
+  transform: scale(1.05);
+}
+
+.hover-underline-link {
+  position: relative;
+  display: inline-block;
+}
+
+.hover-underline-link::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  bottom: 0;
+  left: 0;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 300ms ease;
+}
+
+.hover-underline-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
 }

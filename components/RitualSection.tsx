@@ -55,7 +55,9 @@ export default function RitualSection() {
           start: "top top",
           end: "+=300%", // Scroll distance for 4 steps
           pin: true,
+          pinSpacing: true, // Guarantees proper document height layout
           scrub: 0.8,
+          anticipatePin: 1,
           onUpdate: (self) => {
             // Determine active index (0 to 3) based on progress
             const index = Math.min(
@@ -67,32 +69,41 @@ export default function RitualSection() {
         },
       });
 
-      // Step transition animations tied directly to scrub
+      // Step transition animations sequenced cleanly across the scrub distance
       STEPS.forEach((_, i) => {
-        if (i === 0) return; // Step 0 is starting state
+        if (i === 0) return;
 
-        tl.to(
-          `.bottle-img-${i - 1}`,
-          { opacity: 0, scale: 0.8, y: -40, rotation: -8, duration: 1 },
-          `step-${i}`
-        )
-        .fromTo(
-          `.bottle-img-${i}`,
-          { opacity: 0, scale: 0.85, y: 60, rotation: 8 },
-          { opacity: 1, scale: 1, y: 0, rotation: 0, duration: 1 },
-          `step-${i}`
-        );
+        tl.addLabel(`step-${i}`)
+          .to(
+            `.bottle-img-${i - 1}`,
+            { opacity: 0, scale: 0.8, y: -40, rotation: -8, duration: 1 },
+            `step-${i}`
+          )
+          .fromTo(
+            `.bottle-img-${i}`,
+            { opacity: 0, scale: 0.85, y: 60, rotation: 8 },
+            { opacity: 1, scale: 1, y: 0, rotation: 0, duration: 1 },
+            `step-${i}`
+          );
       });
     }, sectionRef);
 
-    return () => ctx.revert();
+    // Forces ScrollTrigger to recalculate once the DOM settles
+    const refreshTimer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 300);
+
+    return () => {
+      clearTimeout(refreshTimer);
+      ctx.revert();
+    };
   }, []);
 
   return (
     <section
       id="ritual"
       ref={sectionRef}
-      className="relative min-h-screen bg-[#F8F5F1] border-t border-[#C98F78]/15 flex items-center overflow-hidden py-20"
+      className="relative h-screen bg-[#F8F5F1] border-t border-[#C98F78]/15 flex items-center overflow-hidden"
     >
       <div
         ref={containerRef}

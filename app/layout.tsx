@@ -1,3 +1,4 @@
+
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
 import SmoothScroll from "@/components/SmoothScroll";
