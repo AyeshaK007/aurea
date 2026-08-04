@@ -22,6 +22,15 @@ export default function Navbar({ cartCount = 0 }: NavbarProps) {
     return () => window.removeEventListener("scroll", handleScrollState);
   }, []);
 
+  // Lock body scroll when mobile menu or cart drawer is open
+  useEffect(() => {
+    if (isMobileMenuOpen || isCartOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [isMobileMenuOpen, isCartOpen]);
+
   const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
     if (window.location.pathname === "/") {
       e.preventDefault();
@@ -49,13 +58,13 @@ export default function Navbar({ cartCount = 0 }: NavbarProps) {
             {/* Mobile Menu Hamburger Toggle */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-1.5 text-[#171615] hover:text-[#C98F78] transition-colors focus:outline-none"
+              className="md:hidden p-2 -ml-1 text-[#171615] hover:text-[#C98F78] transition-colors focus:outline-none cursor-pointer"
               aria-label="Toggle Menu"
             >
               {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
 
-            {/* Brand Logo - More Prominent Editorial Styling */}
+            {/* Brand Logo */}
             <Link href="/" className="flex items-center gap-2 group">
               <span className="font-serif text-xl sm:text-2xl tracking-[0.18em] text-[#171615] group-hover:text-[#C98F78] transition-colors font-medium">
                 AUREA
@@ -110,40 +119,55 @@ export default function Navbar({ cartCount = 0 }: NavbarProps) {
       </header>
 
       {/* Mobile Nav Overlay Dropdown */}
-      {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-40 bg-[#171615]/40 backdrop-blur-md md:hidden pt-24 px-4">
-          <div className="bg-[#F8F5F1] border border-[#C98F78]/20 rounded-3xl p-6 shadow-2xl flex flex-col space-y-5">
-            <Link
-              href="#collection"
-              onClick={(e) => handleScroll(e, "collection")}
-              className="font-sans text-xs uppercase tracking-[0.3em] text-[#171615] font-semibold py-2.5 border-b border-[#C98F78]/15"
-            >
-              Shop
-            </Link>
-            <Link
-              href="#philosophy"
-              onClick={(e) => handleScroll(e, "philosophy")}
-              className="font-sans text-xs uppercase tracking-[0.3em] text-[#171615] font-semibold py-2.5 border-b border-[#C98F78]/15"
-            >
-              Philosophy
-            </Link>
-            <Link
-              href="#lab"
-              onClick={(e) => handleScroll(e, "lab")}
-              className="font-sans text-xs uppercase tracking-[0.3em] text-[#171615] font-semibold py-2.5 border-b border-[#C98F78]/15"
-            >
-              Ingredients
-            </Link>
-            <Link
-              href="#ritual"
-              onClick={(e) => handleScroll(e, "ritual")}
-              className="font-sans text-xs uppercase tracking-[0.3em] text-[#171615] font-semibold py-2.5"
-            >
-              Journal
-            </Link>
-          </div>
+      <div 
+        className={`fixed inset-0 z-40 bg-[#171615]/40 backdrop-blur-md md:hidden pt-24 px-4 transition-all duration-300 ${
+          isMobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+        onClick={() => setIsMobileMenuOpen(false)}
+      >
+        <div 
+          onClick={(e) => e.stopPropagation()}
+          className={`bg-[#F8F5F1] border border-[#C98F78]/20 rounded-3xl p-6 shadow-2xl flex flex-col space-y-2 transition-all duration-300 transform ${
+            isMobileMenuOpen ? "translate-y-0 opacity-100" : "-translate-y-4 opacity-0"
+          }`}
+        >
+          <span className="font-sans text-[10px] uppercase tracking-[0.3em] text-[#C98F78] font-semibold pb-2 border-b border-[#C98F78]/15">
+            Navigation
+          </span>
+          <Link
+            href="#collection"
+            onClick={(e) => handleScroll(e, "collection")}
+            className="font-serif text-2xl text-[#171615] hover:text-[#C98F78] transition-colors py-3 border-b border-[#C98F78]/15 flex items-center justify-between"
+          >
+            <span>Shop</span>
+            <span className="font-sans text-[10px] tracking-widest text-[#C98F78]">01</span>
+          </Link>
+          <Link
+            href="#philosophy"
+            onClick={(e) => handleScroll(e, "philosophy")}
+            className="font-serif text-2xl text-[#171615] hover:text-[#C98F78] transition-colors py-3 border-b border-[#C98F78]/15 flex items-center justify-between"
+          >
+            <span>Philosophy</span>
+            <span className="font-sans text-[10px] tracking-widest text-[#C98F78]">02</span>
+          </Link>
+          <Link
+            href="#lab"
+            onClick={(e) => handleScroll(e, "lab")}
+            className="font-serif text-2xl text-[#171615] hover:text-[#C98F78] transition-colors py-3 border-b border-[#C98F78]/15 flex items-center justify-between"
+          >
+            <span>Ingredients</span>
+            <span className="font-sans text-[10px] tracking-widest text-[#C98F78]">03</span>
+          </Link>
+          <Link
+            href="#ritual"
+            onClick={(e) => handleScroll(e, "ritual")}
+            className="font-serif text-2xl text-[#171615] hover:text-[#C98F78] transition-colors py-3 flex items-center justify-between"
+          >
+            <span>Journal</span>
+            <span className="font-sans text-[10px] tracking-widest text-[#C98F78]">04</span>
+          </Link>
         </div>
-      )}
+      </div>
 
       {/* Slide-out Cart Drawer */}
       {isCartOpen && (
@@ -162,7 +186,7 @@ export default function Navbar({ cartCount = 0 }: NavbarProps) {
                 </div>
                 <button 
                   onClick={() => setIsCartOpen(false)}
-                  className="p-2 rounded-full hover:bg-[#171615]/5 transition-colors text-[#171615]"
+                  className="p-2 rounded-full hover:bg-[#171615]/5 transition-colors text-[#171615] cursor-pointer"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -178,7 +202,7 @@ export default function Navbar({ cartCount = 0 }: NavbarProps) {
                     const el = document.getElementById("collection");
                     if (el) el.scrollIntoView({ behavior: "smooth" });
                   }}
-                  className="inline-flex items-center gap-2 text-xs font-sans uppercase tracking-[0.2em] text-[#C98F78] hover:underline font-semibold"
+                  className="inline-flex items-center gap-2 text-xs font-sans uppercase tracking-[0.2em] text-[#C98F78] hover:underline font-semibold cursor-pointer"
                 >
                   Explore Formulas <ArrowRight className="w-3.5 h-3.5" />
                 </button>
