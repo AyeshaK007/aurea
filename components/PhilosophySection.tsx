@@ -1,5 +1,6 @@
 "use client";
 
+import type { Metadata } from "next";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -31,6 +32,12 @@ const principles = [
     icon: Leaf,
   },
 ];
+
+export const metadata: Metadata = {
+  title: "Our Philosophy",
+  description:
+    "Learn about our clinical standards, raw botanical sourcing, and formula formulation lab.",
+};
 
 export default function PhilosophySection() {
   const sectionRef = useRef<HTMLDivElement>(null);
