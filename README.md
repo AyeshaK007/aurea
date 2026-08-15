@@ -1,45 +1,53 @@
-# ✦ AUREA Radiance — Science-Backed Bio-Skincare
+# AUREA Radiance ✦
 
-A high-performance, interactive e-commerce web application built for **AUREA Radiance**, featuring modern smooth scrolling, dynamic dynamic route views, micro-animations, and full responsiveness.
+A polished skincare e-commerce experience built to demonstrate modern frontend development, interaction design, responsive layouts, and reusable product UI.
 
----
+## ✨ Highlights
 
-## 📸 Visual Showcase
+- Editorial skincare storefront with a premium visual direction
+- Dynamic product routes using the Next.js App Router
+- Smooth scrolling and micro-interactions with GSAP
+- Responsive layouts for desktop and mobile
+- Accessible motion using `prefers-reduced-motion`
+- SEO and Open Graph metadata
+- Reusable product and content components
 
-> *Tip: Replace these image placeholders with your actual project screenshots or GIFs.*
+## 🛠️ Tech stack
 
-| Hero Experience | Product Showcase |
-|---|---|
-| ![Aurea Hero Screen](public/og-image.png) | ![Aurea Product Screen](public/og-image.png) |
+- **Framework:** Next.js (App Router)
+- **Language:** TypeScript
+- **UI:** React + Tailwind CSS
+- **Animation:** GSAP + smooth scrolling
+- **Typography:** Cormorant Garamond + Manrope
+- **Deployment:** Vercel-ready
 
----
+## 📸 Project visuals
 
-## ✨ Features
+The repository includes product imagery and a branded bottle asset in `public/`. For the portfolio, the most useful screenshots are:
 
-- **Fluid Smooth Scroll:** Seamless navigation powered by Lenis / custom smooth scrolling hooks.
-- **Dynamic Product Pages:** Server & client-component architecture utilizing Next.js App Router dynamic routes (`/shop/[slug]`).
-- **Interactive Micro-Animations:** Tailored UI transitions built using GSAP (GreenSock) with full `prefers-reduced-motion` accessibility support.
-- **Custom SEO & Open Graph:** Fully configured Open Graph metadata and dynamic social card previews.
-- **Responsive & Accessible Design:** Crafted with a minimalist editorial aesthetic, warm neutral palette, and fully accessible typography.
+1. Landing / hero experience
+2. Product listing
+3. Dynamic product detail page
+4. Mobile responsive view
+5. Key animation / interaction state
 
----
+> The README intentionally focuses on the implementation and project story. Add exported app screenshots to a `docs/screenshots/` folder when available so visitors can see the finished interface immediately.
 
-## 🛠️ Tech Stack
-
-- **Framework:** [Next.js](https://nextjs.org/) (App Router, React 19 / 18)
-- **Language:** [TypeScript](https://www.typescriptlang.org/)
-- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
-- **Animation Engine:** [GSAP](https://gsap.com/)
-- **Fonts:** Cormorant Garamond & Manrope via `next/font`
-- **Deployment:** [Vercel](https://vercel.com)
-
----
-
-## 🚀 Getting Started
-
-First, clone the repository and install dependencies:
+## 🚀 Run locally
 
 ```bash
-git clone [https://github.com/your-username/aurea.git](https://github.com/your-username/aurea.git)
+git clone https://github.com/AyeshaK007/aurea.git
 cd aurea
 npm install
+npm run dev
+```
+
+Open `http://localhost:3000` in your browser.
+
+## 📌 Portfolio note
+
+AUREA is one of my featured frontend projects and demonstrates my ability to turn a visual concept into a responsive, interactive web experience using modern React and Next.js patterns.
+
+## 👩🏻‍💻 Author
+
+**AyeshaK007** — BSCS student focused on frontend development, Python, and data-focused software.
